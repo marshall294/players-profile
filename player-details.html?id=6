@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player's Media Dashboard</title>
+    <!-- External CSS for fonts and animations -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #f4f4f9;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #1d3557;
+            color: #f1faee;
+            padding: 20px;
+            font-size: 2.5em;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .player-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .player-header h2 {
+            font-size: 2.2em;
+            color: #1d3557;
+        }
+
+        .player-header p {
+            font-size: 1.1em;
+            color: #6c757d;
+        }
+
+        .media-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .media-tabs a {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #1d3557;
+            text-decoration: none;
+            border: 2px solid #1d3557;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .media-tabs a:hover {
+            background-color: #1d3557;
+            color: #fff;
+        }
+
+        .media-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .media-card {
+            background-color: #ffffff;
+            width: calc(33.33% - 20px);
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .media-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .media-card img, .media-card video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .media-card .media-title {
+            font-size: 1.4em;
+            color: #222;
+            margin-top: 15px;
+        }
+
+        .media-card .media-description {
+            font-size: 1em;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .media-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #457b9d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .media-card a:hover {
+            background-color: #1d3557;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .media-card {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .media-card {
+                width: 100%;
+            }
+
+            .media-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Player Media Dashboard
+</header>
+
+<div class="container">
+    <div class="player-header">
+        <h2>JAMILU SULEIMAN SABO (ANSAR)</h2>
+        <p>Professional Footballer at Riders FC</p>
+    </div>
+
+    <div class="media-tabs">
+        <a href="#photos">Photos</a>
+        <a href="#videos">Videos</a>
+        <a href="#other">Other Media</a>
+    </div>
+
+    <div id="photos" class="media-content">
+        <!-- Media Card 1: Photo -->
+        <div class="media-card">
+            <img src="https://via.placeholder.com/400x250" alt="Player Photo">
+            <div class="media-title">Match Day Photo</div>
+            <div class="media-description">Photo from the recent match against Team X</div>
+            <a href="https://via.placeholder.com/600x400" target="_blank">View Full Image</a>
+        </div>
+
+        <!-- Media Card 2: Photo -->
+        <div class="media-card">
+            <img src="https://via.placeholder.com/400x250" alt="Player Photo">
+            <div class="media-title">Training Session</div>
+            <div class="media-description">Behind the scenes from the training camp</div>
+            <a href="https://via.placeholder.com/600x400" target="_blank">View Full Image</a>
+        </div>
+    </div>
+
+    <div id="videos" class="media-content">
+        <!-- Media Card 3: Video -->
+        <div class="media-card">
+            <video controls>
+                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="media-title">Goal Scoring Moment</div>
+            <div class="media-description">Watch the moment I scored in the finals!</div>
+            <a href="https://www.youtube.com" target="_blank">Watch on YouTube</a>
+        </div>
+
+        <!-- Media Card 4: Video -->
+        <div class="media-card">
+            <video controls>
+                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="media-title">Interview with the Coach</div>
+            <div class="media-description">Interview discussing tactics and upcoming matches.</div>
+            <a href="https://www.youtube.com" target="_blank">Watch Interview</a>
+        </div>
+    </div>
+
+    <div id="other" class="media-content">
+        <!-- Media Card 5: Other Media -->
+        <div class="media-card">
+            <img src="https://via.placeholder.com/400x250" alt="Player Media">
+            <div class="media-title">Press Conference</div>
+            <div class="media-description">A press conference where I talk about the season ahead.</div>
+            <a href="https://via.placeholder.com/600x400" target="_blank">View More</a>
+        </div>
+
+        <!-- Media Card 6: Other Media -->
+        <div class="media-card">
+            <img src="https://via.placeholder.com/400x250" alt="Player Media">
+            <div class="media-title">Fan Meet & Greet</div>
+            <div class="media-description">Fan event where I signed autographs for supporters.</div>
+            <a href="https://via.placeholder.com/600x400" target="_blank">View More</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

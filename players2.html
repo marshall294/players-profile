@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riders FC Player's Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f4f4f9, #dfe4ea);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #1d3557;
+            color: #f1faee;
+            padding: 20px;
+            width: 100%;
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            width: 80%;
+            max-width: 1200px;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Player Card */
+        .player-card {
+            background-color: #ffffff;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInCard 1s ease forwards;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes fadeInCard {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 3D Framed Player Image */
+        .player-image {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .player-card:hover .player-image {
+            transform: scale(1.05);
+        }
+
+        .player-card h3 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1d3557;
+        }
+
+        /* Player Details Container - Hidden by default */
+        .player-details {
+            display: none;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .player-card:hover .player-details {
+            display: block;
+            animation: fadeInDetails 1s ease-out;
+        }
+
+        @keyframes fadeInDetails {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .player-card .player-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .player-card .player-details th,
+        .player-card .player-details td {
+            padding: 8px;
+            font-size: 0.9rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .player-card .player-details th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .player-card .player-details td {
+            background-color: #fbfbfb;
+        }
+
+        .explore-more-btn {
+            background-color: #457b9d;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .explore-more-btn:hover {
+            background-color: #1d3557;
+        }
+
+        /* Add Delay for Animation to Each Card */
+        .player-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .player-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .player-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .player-card:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                font-size: 2rem;
+            }
+
+            .players-grid {
+                width: 100%;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .player-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .player-card .player-details th,
+            .player-card .player-details td {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        Riders FC Player's Profile
+    </header>
+
+    <div class="players-grid" id="playersGrid"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFsHg9fK6IDnHbuxmBleEfIIfVGsuLDik",
+            authDomain: "profile-b825d.firebaseapp.com",
+            projectId: "profile-b825d",
+            storageBucket: "profile-b825d.firebasestorage.app",
+            messagingSenderId: "925276859161",
+            appId: "1:925276859161:web:194c60f6dbd9f1ef8bf388"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const playersGrid = document.getElementById('playersGrid');
+
+            const loadPlayers = async () => {
+                const querySnapshot = await getDocs(collection(db, "players"));
+                playersGrid.innerHTML = ''; // Clear the grid before displaying new players
+
+                let delay = 0; // Add delay to each card animation
+
+                querySnapshot.forEach(doc => {
+                    const player = doc.data();
+                    const playerCard = document.createElement('div');
+                    playerCard.classList.add('player-card');
+
+                    const playerDetailsURL = `/player-details.html?id=${player.cardNumber}`;
+
+                    playerCard.innerHTML = `
+                        <img src="${player.playerImage}" alt="Player Image" class="player-image">
+                        <h3>${player.fullName} (${player.nickname})</h3>
+                        <div class="player-details">
+                            <table>
+                                <tr><th>Position</th><td>${player.position}</td></tr>
+                                <tr><th>Phone</th><td>${player.phone}</td></tr>
+                                <tr><th>Email</th><td>${player.email}</td></tr>
+                                <tr><th>Address</th><td>${player.address}</td></tr>
+                                <tr><th>DOB</th><td>${player.dob}</td></tr>
+                                <tr><th>Height</th><td>${player.height} cm</td></tr>
+                                <tr><th>Country</th><td>${player.country}</td></tr>
+                                <tr><th>State of Origin</th><td>${player.state}</td></tr>
+                                <tr><th>LGA</th><td>${player.lga}</td></tr>
+                                <tr><th>Former Club</th><td>${player.formerClub}</td></tr>
+                                <tr><th>Present Club</th><td>${player.presentClub}</td></tr>
+                            </table>
+                        </div>
+                        <a href="${playerDetailsURL}" class="explore-more-btn">Explore More</a>
+                    `;
+
+                    playersGrid.appendChild(playerCard);
+                });
+            };
+
+            loadPlayers();
+        });
+    </script>
+
+</body>
+
+</html>
